@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI-ИнфоLab — Дербестендірілген оқыту</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <nav class="nav">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <h1>AI-ИнфоLab</h1>
+          <p>Информатика • Диагностика • Адаптив практика • AI-ассистент</p>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a class="chip active" href="index.html">Басты бет</a>
+        <a class="chip" href="test.html">Диагностика</a>
+        <a class="chip" href="results.html">Нәтиже</a>
+        <a class="chip" href="tasks.html">Практика</a>
+        <a class="chip" href="assistant.html">Ассистент</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <h2>ЖИ көмегімен дербестендірілген оқыту</h2>
+      <p>
+        Бұл платформада сіз алдымен <b>диагностикалық тест</b> тапсырасыз.
+        Нәтижеге қарай жүйе сізге <b>деңгейіңізге сай практикалық тапсырмалар</b> береді.
+        Қажет болса, <b>AI-ассистент</b> қате талдауға және түсіндіруге көмектеседі.
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="test.html">Диагностикадан өту</a>
+        <a class="btn success" href="tasks.html">Практикаға көшу</a>
+        <a class="btn" href="assistant.html">AI-ассистент</a>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h3>1) Диагностика</h3>
+        <p>Алгоритм, логика, шарт, цикл, тізім, функция және қате талдау бойынша 12 сұрақ.</p>
+        <div class="meta">
+          <span class="badge">ҚР оқу бағдарламасына сай</span>
+          <span class="badge">Пайыздық нәтиже</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>2) Адаптив тапсырмалар</h3>
+        <p>Нәтижеңізге қарай: базалық / орта / жоғары деңгейдегі практикалық тапсырмалар автоматты беріледі.</p>
+        <div class="meta">
+          <span class="badge">Автотексеру</span>
+          <span class="badge">Қадамдық ойлау</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>3) AI-ассистент</h3>
+        <p>Қате себебін түсіндіру, тақырыпты қайталау, бағыт беру. Қаласаңыз, сыртқы чатботты embed арқылы қосасыз.</p>
+        <div class="meta">
+          <span class="badge">Жұмыс істейтін модал</span>
+          <span class="badge">Embed (iframe)</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>4) Нәтиже және прогресс</h3>
+        <p>Тест нәтижесі, әлсіз тақырыптар, ұсыныс және деңгей автоматты сақталады.</p>
+        <div class="meta">
+          <span class="badge">localStorage</span>
+          <span class="badge">Қарапайым аналитика</span>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer">
+      Ескерту: Практикалық тапсырмаларда код тексеру браузердің өзінде орындалады (сервер жоқ). Бұл GitHub Pages үшін қалыпты.
+    </p>
+  </div>
+
+  <div class="fab" id="fab" title="AI-ассистент">
+    <span>AI</span>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <b>AI-ассистент</b>
+        <button class="btn" id="closeModal">Жабу</button>
+      </div>
+      <div class="modal-body two">
+        <div>
+          <p class="muted"><b>Жылдам көмек:</b> сұрақ қойыңыз (қате, цикл, шарт, массив, деңгей).</p>
+          <textarea class="codebox" id="chatIn" placeholder="Мысалы: цикл деген не? немесе қатені қалай табам?"></textarea>
+          <div class="actions">
+            <button class="btn success" id="askBtn">Жіберу</button>
+          </div>
+          <div class="out" id="chatOut">🤖 Сәлем! Сұрағыңызды жазыңыз.</div>
+        </div>
+        <div>
+          <p class="muted"><b>Қаласаңыз сыртқы чатботты қосыңыз (iframe URL):</b></p>
+          <input class="input" id="embedUrl" placeholder="https://... (Botpress/Chatbase/embed)" />
+          <div class="actions">
+            <button class="btn primary" id="saveEmbed">Сақтау</button>
+          </div>
+          <iframe id="embedFrame" style="width:100%;height:360px;border:1px solid rgba(255,255,255,.12);border-radius:16px;display:none;background:rgba(0,0,0,.15)"></iframe>
+          <p class="help">Егер URL бос болса — тек ішкі (rule-based) ассистент жұмыс істейді.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { mountNav, mountAssistant } from "./assets/app.js";
+    mountNav();
+    mountAssistant();
+  </script>
+</body>
+</html>
