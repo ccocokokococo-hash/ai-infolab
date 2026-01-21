@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI-ИнфоLab — AI-ассистент</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <nav class="nav">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <h1>AI-ИнфоLab</h1>
+          <p>AI-ассистент (ішкі + embed)</p>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a class="chip" href="index.html">Басты бет</a>
+        <a class="chip" href="test.html">Диагностика</a>
+        <a class="chip" href="results.html">Нәтиже</a>
+        <a class="chip" href="tasks.html">Практика</a>
+        <a class="chip active" href="assistant.html">Ассистент</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <h2>AI-ассистент</h2>
+      <p class="muted">Бұл бетте ассистент бөлек ашылады. Сонымен қатар барлық бетте төменгі оң жақта AI батырмасы бар.</p>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h3>Ішкі ассистент</h3>
+        <p class="muted">Қате талдау, цикл, шарт, массив, деңгей туралы жылдам жауап береді.</p>
+        <textarea class="codebox" id="chatIn" placeholder="Сұрағыңызды жазыңыз..."></textarea>
+        <div class="actions">
+          <button class="btn success" id="askBtn">Жіберу</button>
+        </div>
+        <div class="out" id="chatOut">🤖 Сәлем! Сұрағыңызды жазыңыз.</div>
+      </div>
+
+      <div class="card">
+        <h3>Embed чатбот (қаласаңыз)</h3>
+        <p class="muted">Botpress/Chatbase сияқты сервистен алынған iframe URL-ді енгізіңіз.</p>
+        <input class="input" id="embedUrl" placeholder="https://..." />
+        <div class="actions">
+          <button class="btn primary" id="saveEmbed">Сақтау</button>
+        </div>
+        <iframe id="embedFrame" style="width:100%;height:420px;border:1px solid rgba(255,255,255,.12);border-radius:16px;display:none;background:rgba(0,0,0,.15)"></iframe>
+        <p class="help">URL бос болса — тек ішкі ассистент жұмыс істейді.</p>
+      </div>
+    </section>
+  </div>
+
+  <script type="module">
+    import { mountNav, mountAssistant } from "./assets/app.js";
+    mountNav();
+
+    // Reuse modal assistant logic but also wire this page inputs
+    mountAssistant();
+
+    // Simple bridge: open modal style assistant not needed here; we call same elements by IDs
+    // We'll just import bot via mountAssistant already, but assistant.html has its own fields.
+    // So we use the internal assistant modal: click the floating button OR use these controls below:
+    const askBtn = document.getElementById("askBtn");
+    const chatIn = document.getElementById("chatIn");
+    const chatOut = document.getElementById("chatOut");
+    const saveEmbedBtn = document.getElementById("saveEmbed");
+    const embedInput = document.getElementById("embedUrl");
+    const iframe = document.getElementById("embedFrame");
+
+    const EMBED_KEY = "aiinfolab_embed_url_v1";
+    const getEmbed = ()=> localStorage.getItem(EMBED_KEY) || "";
+    const setEmbed = (v)=> localStorage.setItem(EMBED_KEY, v);
+
+    const bot = (msg)=>{
+      const m = msg.toLowerCase();
+      if (m.includes("қате") || m.includes("error")) return "Қате талдау: қате мәтіні → жол → синтаксис/логика → шағын тест.";
+      if (m.includes("цикл") || m.includes("for") || m.includes("while")) return "Цикл: әрекетті қайталау. for — санауыш, while — шарт.";
+      if (m.includes("шарт") || m.includes("if")) return "if: шартқа қарай әртүрлі әрекет. else/else if қолдануға болады.";
+      if (m.includes("массив") || m.includes("array") || m.includes("list")) return "Массив: элементтер жиыны. arr.length, arr[i], for/of.";
+      return "Сұрағыңызды нақтылаңыз (шарт/цикл/массив/функция/қате).";
+    };
+
+    askBtn.addEventListener("click", ()=>{
+      const msg = chatIn.value.trim();
+      if (!msg) return;
+      chatOut.textContent += `\n\n👤 ${msg}\n🤖 ${bot(msg)}`;
+      chatIn.value = "";
+    });
+
+    const apply = ()=>{
+      const url = getEmbed().trim();
+      embedInput.value = url;
+      if (url){
+        iframe.src = url;
+        iframe.style.display = "block";
+      } else {
+        iframe.style.display = "none";
+        iframe.removeAttribute("src");
+      }
+    };
+    apply();
+
+    saveEmbedBtn.addEventListener("click", ()=>{
+      setEmbed(embedInput.value.trim());
+      apply();
+      alert("Embed URL сақталды.");
+    });
+  </script>
+
+  <div class="fab" id="fab" title="AI-ассистент"><span>AI</span></div>
+  <div class="modal" id="modal">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <b>AI-ассистент</b>
+        <button class="btn" id="closeModal">Жабу</button>
+      </div>
+      <div class="modal-body two">
+        <div>
+          <textarea class="codebox" id="chatIn" placeholder="..."></textarea>
+          <div class="actions"><button class="btn success" id="askBtn">Жіберу</button></div>
+          <div class="out" id="chatOut">🤖 Сұрағыңызды жазыңыз.</div>
+        </div>
+        <div>
+          <input class="input" id="embedUrl" placeholder="https://..." />
+          <div class="actions"><button class="btn primary" id="saveEmbed">Сақтау</button></div>
+          <iframe id="embedFrame" style="width:100%;height:360px;border:1px solid rgba(255,255,255,.12);border-radius:16px;display:none;background:rgba(0,0,0,.15)"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
