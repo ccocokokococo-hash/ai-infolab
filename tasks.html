@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI-ИнфоLab — Практика</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <nav class="nav">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <h1>AI-ИнфоLab</h1>
+          <p>Адаптив практикалық тапсырмалар</p>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a class="chip" href="index.html">Басты бет</a>
+        <a class="chip" href="test.html">Диагностика</a>
+        <a class="chip" href="results.html">Нәтиже</a>
+        <a class="chip active" href="tasks.html">Практика</a>
+        <a class="chip" href="assistant.html">Ассистент</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <h2>Практикалық тапсырмалар</h2>
+      <p id="levelLine" class="muted"></p>
+      <div class="actions">
+        <a class="btn" href="test.html">Тестті қайта тапсыру</a>
+        <a class="btn primary" href="results.html">Нәтижеге қайту</a>
+      </div>
+    </section>
+
+    <section class="card full">
+      <h3>Тапсырмалар (автотексеру)</h3>
+      <div id="tasksBox"></div>
+    </section>
+  </div>
+
+  <script type="module">
+    import { mountNav, mountTasks, mountAssistant } from "./assets/app.js";
+    mountNav(); mountTasks(); mountAssistant();
+  </script>
+
+  <div class="fab" id="fab" title="AI-ассистент"><span>AI</span></div>
+  <div class="modal" id="modal">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <b>AI-ассистент</b>
+        <button class="btn" id="closeModal">Жабу</button>
+      </div>
+      <div class="modal-body two">
+        <div>
+          <textarea class="codebox" id="chatIn" placeholder="Мысалы: бұл тапсырманы қалай бастаймын?"></textarea>
+          <div class="actions"><button class="btn success" id="askBtn">Жіберу</button></div>
+          <div class="out" id="chatOut">🤖 Сұрағыңызды жазыңыз.</div>
+        </div>
+        <div>
+          <input class="input" id="embedUrl" placeholder="https://..." />
+          <div class="actions"><button class="btn primary" id="saveEmbed">Сақтау</button></div>
+          <iframe id="embedFrame" style="width:100%;height:360px;border:1px solid rgba(255,255,255,.12);border-radius:16px;display:none;background:rgba(0,0,0,.15)"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
