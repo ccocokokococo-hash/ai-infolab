@@ -3,19 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI-ИнфоLab — Диагностика</title>
+  <title>Диагностика</title>
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
   <div class="container">
     <nav class="nav">
-      <div class="brand">
-        <div class="logo"></div>
-        <div>
-          <h1>AI-ИнфоLab</h1>
-          <p>Диагностика тесті</p>
-        </div>
-      </div>
+      <div class="brand"><div class="logo"></div><div><h1>AI-ИнфоLab</h1><p>Диагностика</p></div></div>
       <div class="nav-links">
         <a class="chip" href="index.html">Басты бет</a>
         <a class="chip active" href="test.html">Диагностика</a>
@@ -26,8 +20,17 @@
     </nav>
 
     <section class="hero">
-      <h2>Бастапқы диагностика</h2>
-      <p>12 сұрақ. Жауап беріп болған соң “Нәтижені шығару” басыңыз. Нәтижеге қарай практика автоматты беріледі.</p>
+      <h2>Бастапқы диагностикалық тест</h2>
+      <p>Алдымен сыныпты таңдаңыз, сосын сұрақтарға жауап беріңіз.</p>
+
+      <div class="q">
+        <p class="q-title">Сыныпты таңдаңыз:</p>
+        <div class="options">
+          <label class="opt"><input type="radio" name="grade" value="8"> <span>8-сынып</span></label>
+          <label class="opt"><input type="radio" name="grade" value="9"> <span>9-сынып</span></label>
+        </div>
+      </div>
+
       <div class="actions">
         <button class="btn danger" id="resetTest">Тазалау</button>
         <button class="btn primary" id="submitTest">Нәтижені шығару</button>
@@ -40,34 +43,26 @@
     </section>
   </div>
 
-  <script type="module">
-    import { mountNav, mountTest, mountAssistant } from "./assets/app.js";
-    mountNav(); mountTest(); mountAssistant();
-  </script>
-
-  <div class="fab" id="fab" title="AI-ассистент"><span>AI</span></div>
+  <div class="fab" id="fab"><span>AI</span></div>
   <div class="modal" id="modal">
     <div class="modal-panel">
-      <div class="modal-head">
-        <b>AI-ассистент</b>
-        <button class="btn" id="closeModal">Жабу</button>
-      </div>
+      <div class="modal-head"><b>AI-ассистент</b><button class="btn" id="closeModal">Жабу</button></div>
       <div class="modal-body two">
         <div>
-          <p class="muted"><b>Жылдам көмек:</b></p>
-          <textarea class="codebox" id="chatIn" placeholder="Мысалы: if деген не?"></textarea>
-          <div class="actions"><button class="btn success" id="askBtn">Жіберу</button></div>
-          <div class="out" id="chatOut">🤖 Сұрағыңызды жазыңыз.</div>
+          <div class="out">🤖 Elfsight чатбот оң жақта ашылады.</div>
         </div>
         <div>
-          <p class="muted"><b>Embed URL (қаласаңыз):</b></p>
-          <input class="input" id="embedUrl" placeholder="https://..." />
-          <div class="actions"><button class="btn primary" id="saveEmbed">Сақтау</button></div>
-          <iframe id="embedFrame" style="width:100%;height:360px;border:1px solid rgba(255,255,255,.12);border-radius:16px;display:none;background:rgba(0,0,0,.15)"></iframe>
-          <p class="help">URL бос болса — ішкі ассистент қана.</p>
+          <!-- Elfsight AI Chatbot | Untitled AI Chatbot -->
+          <script src="https://elfsightcdn.com/platform.js" async></script>
+          <div class="elfsight-app-c6c3a329-8f54-4f5f-a802-14ef05c5fb39" data-elfsight-app-lazy></div>
         </div>
       </div>
     </div>
   </div>
+
+  <script type="module">
+    import { mountNav, mountTest, mountAssistant } from "./assets/app.js";
+    mountNav(); mountTest(); mountAssistant();
+  </script>
 </body>
 </html>
